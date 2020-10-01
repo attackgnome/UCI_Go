@@ -12,7 +12,7 @@ type Person struct {
 
 func main() {
 
-	m := make(map[int]Person)
+	m := make(map[string]int)
 
 	var name string
 	var address string
@@ -26,10 +26,10 @@ func main() {
 		name: name,
 		addr: address,
 	}
-	m[1] = p1
+	m[p1.name] = 1
+	m[p1.addr] = 1
 
 	barr, _ := json.Marshal(m)
-	fmt.Println(barr)
 	fmt.Println(string(barr))
 
 }

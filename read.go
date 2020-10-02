@@ -1,15 +1,10 @@
 package main
 
 import (
-	"fmt"
-	"io/ioutil"
-)
-package main
-
-import (
 	"bufio"
 	"fmt"
 	"os"
+	"strings"
 )
 
 type name struct {
@@ -19,30 +14,31 @@ type name struct {
 
 func main() {
 	var filename string
-	var err error
-	var names name[]
+	var names []name
 
 	fmt.Println("Enter a filename:")
 	fmt.Scan(&filename) //input from terminal
 
-	    // Open the file.
-		f, _ := os.Open(filename)
-		// Create a new Scanner for the file.
-		scanner := bufio.NewScanner(f)
-		// Loop over all lines in the file, read the runes, and append to name structs
-		for scanner.Scan() {
-		  line := scanner.Text()
+	// Open the file.
+	f, _ := os.Open(filename)
+	// Create a new Scanner for the file.
+	scanner := bufio.NewScanner(f)
+	// Loop over all lines in the file, read the runes, and append to name structs
+	for scanner.Scan() {
+		line := scanner.Text()
 
-		  newName := name{ 
-		  fname: line[:19],
-		  lname: line[20:],
-	  }
+		newName := name{
+			fname: strings.Split(line, " ")[0],
+			lname: strings.Split(line, " ")[1],
+		}
 
-		  names = append(names, newName)
+		names = append(names, newName)
 
 	}
-}
 
-//Your program will define a name struct
-//hich has two fields, fname for the first name, and
-//lname for the last name. Each field will be a string of size 20 (characters).
+	//print out files read in.
+	for _, n := range names {
+		println(n.fname + " " + n.lname)
+	}
+
+}

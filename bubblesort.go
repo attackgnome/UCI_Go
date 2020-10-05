@@ -3,31 +3,33 @@ package main
 import (
 	"fmt"
 	"strconv"
-	"strings"
 )
 
 func main() {
 	var intEntry string
-	var out []string
+	var entryNum string
+	var ints []int
 
-	fmt.Println("Enter a sequence of up to 10 integers seperated by spaces: ")
-	fmt.Scan(&intEntry) //input from terminal
+	//Prompt the user to input the number of integers to be sorted
+	fmt.Println("Enter a the number of Integers in the sequence")
+	fmt.Scan(&entryNum)
+	intNum, _ := strconv.Atoi(entryNum)
 
-	out = strings.Split(intEntry, " ")
-
-	ints := make([]int, len(out))
-	fmt.Println(out)
-
-	for i, s := range out {
-		ints[i], _ = strconv.Atoi(s)
+	//Loop to prompt for integer entry and store the inputs to a slice
+	for i := 1; i <= intNum; i++ {
+		fmt.Println("Enter an Integer: ")
+		fmt.Scan(&intEntry)
+		intNum, _ := strconv.Atoi(intEntry)
+		ints = append(ints, intNum)
 	}
-
-	fmt.Println(ints)
+	//Call Bubblesort and print the output
+	BubbleSort(ints)
+	fmt.Print(ints)
 
 }
 
-//BubbleSort() takes a slice of integers as an argument and
-//modifies the slice so that the elements are in sorted order.
+//Swap is a function to swap the contents of the slice in
+//position i with the contents in position i+1.
 func Swap(sli []int, i int) {
 	var hold int
 	hold = sli[i+1]
@@ -35,12 +37,18 @@ func Swap(sli []int, i int) {
 	sli[i] = hold
 }
 
-//
+//BubbleSort takes a slice of integers as an argument and
+//modifies the slice so that the elements are in sorted order.
 func BubbleSort(sli []int) {
-
-	for i, num := range sli {
-		if num > sli[i+1] {
-			Swap(sli, i)
+	swapped := true //tracker for if elements are being swapped
+	for swapped {
+		// set swapped to false
+		swapped = false
+		for i := 0; i < len(sli)-1; i++ {
+			if sli[i] > sli[i+1] {
+				Swap(sli, i)
+				swapped = true
+			}
 		}
 	}
 }
